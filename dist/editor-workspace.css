@@ -1,0 +1,106 @@
+/* Editing has three stable regions: live capacity, settings, and shared actions. */
+:root body.editing .unified-topbar{grid-template-columns:auto 1fr;gap:4px 14px;padding:5px 12px 8px;z-index:60;}
+:root body.editing .unified-topbar .main-tabs{grid-column:2;grid-row:1;justify-self:end;}
+:root body.editing .unified-topbar .topbar-summary{display:none;}
+:root body.editing .unified-topbar #edit-capacity-card{
+  position:static;transform:none;grid-column:1/-1;grid-row:2;visibility:visible;
+  display:grid;grid-template-columns:minmax(0,1fr) auto;align-items:center;gap:6px 18px;
+  width:auto;min-width:0;max-width:none;padding:9px 1px 2px;border:0;border-top:1px solid var(--line);
+  border-radius:0;background:transparent;box-shadow:none;
+}
+:root body.editing .edit-capacity-values{grid-template-columns:repeat(3,minmax(0,1fr));}
+:root body.editing .edit-capacity-values>div{display:flex;align-items:center;gap:12px;padding:0 18px;}
+:root body.editing .edit-capacity-values>div:first-child{padding-left:0;}
+:root body.editing .edit-capacity-values span{font-size:10px;}
+:root body.editing .edit-capacity-values strong{font-size:20px;margin:0;}
+:root body.editing .edit-capacity-foot{display:flex;margin:0;gap:8px;}
+:root body.editing #edit-capacity-delta{font-size:10px;}
+:root body.editing .edit-capacity-explainer>summary{width:30px;height:30px;min-height:30px;}
+:root body.editing .edit-capacity-warning{grid-column:1/-1;max-width:none;padding-top:5px;margin-top:0;max-height:36px;overflow:auto;}
+
+
+/* Canvas and settings use separate rectangles measured from the live header/dock. */
+:root body.editing #design-panel{inset:auto;left:var(--editor-scene-left,12px);top:var(--editor-scene-top,128px);width:var(--editor-scene-width,calc(100vw - 24px));height:var(--editor-scene-height,calc(100dvh - 220px));}
+:root body.editing #design-panel .scene-wrap{position:absolute;inset:48px 0 0;width:100%;height:auto;overflow:hidden;border-radius:10px;}
+#editor-view-controls{display:none;}
+:root body.editing #editor-view-controls{display:flex;position:absolute;top:0;right:0;width:100%;align-items:center;gap:8px;z-index:3;}
+:root #editor-view-controls .editor-camera-controls{display:flex;align-items:center;gap:2px;margin-left:auto;padding:2px;border-radius:10px;flex-shrink:0;}
+:root #editor-view-controls .editor-camera-controls button{height:44px;min-width:44px;padding:0 10px;border:0;background:transparent;color:var(--ink);font:inherit;font-size:12px;border-radius:7px;}
+:root #editor-view-controls .editor-camera-controls button:hover{background:rgba(33,87,50,.08);}
+:root #editor-view-controls #edit-cell-zoom{color:var(--green);border-inline:1px solid var(--line);border-radius:0;}
+:root #editor-view-controls .edit-context-row{display:none;min-height:44px;margin:0;padding:0;border:0;flex-wrap:nowrap;gap:8px;min-width:0;}
+:root #editor-view-controls .edit-context-row:has(#edit-brush-options:not([hidden]),#edit-port-options:not([hidden])){display:flex;}
+:root #editor-view-controls #edit-brush-options{margin:0;padding:2px;gap:0;background:rgba(237,240,238,.75);border-radius:9px;}
+:root #editor-view-controls #edit-brush-options button{height:44px;padding:0 10px;font-size:12px;}
+:root #editor-view-controls .edit-context-row:has(#edit-port-options:not([hidden])){flex:1;}
+:root #editor-view-controls .edit-port-options{display:flex;flex:1;flex-wrap:nowrap;gap:8px;min-width:0;}
+:root #editor-view-controls .edit-port-options select{width:100%;min-width:0;max-width:220px;min-height:44px;font-size:12px;}
+:root #edit-port-instruction,:root #edit-tool-context{display:none;}
+:root body.editing #edit-panel{inset:auto;left:var(--editor-panel-left,12px);top:var(--editor-panel-top,128px);width:var(--editor-panel-width,300px);height:var(--editor-panel-height,400px);max-width:none;max-height:none;transform:none;animation:none;}
+:root #edit-panel:before{display:none;}
+:root #edit-panel .panel-header{padding:6px 14px;align-items:center;gap:10px;}
+:root #edit-panel .panel-header .eyebrow,:root #edit-panel .panel-header p{display:none;}
+:root #edit-panel .panel-header h2{font-size:17px;margin:0;}
+:root #edit-panel .panel-content{padding:14px;touch-action:pan-y;}
+:root #edit-panel .preset{font-size:11px;white-space:nowrap;padding:8px 2px;}
+:root #edit-panel .edit-settings-collapse{display:flex;align-items:center;gap:4px;min-width:60px;min-height:44px;padding:8px;font-size:12px;}
+.edit-settings-collapse svg{width:16px;height:16px;}
+/* A compact, evenly spaced dock; no stretched empty slots or mixed glyph icons. */
+:root body.editing #edit-toolsbar{position:fixed;left:50%;right:auto;transform:translateX(-50%);bottom:max(12px,env(safe-area-inset-bottom));z-index:60;width:max-content;max-width:calc(100vw - 24px);visibility:visible;padding:6px;border-radius:13px;}
+:root #edit-toolsbar .edit-toolbar-row{display:flex;align-items:center;justify-content:center;gap:8px;flex-wrap:nowrap;overflow:visible;}
+:root #edit-toolsbar .tool-grid{display:flex;flex:none;justify-content:center;padding:0;border:0;gap:2px;min-width:0;}
+:root #edit-toolsbar .tool{display:flex;flex:none;flex-direction:row;align-items:center;justify-content:center;min-height:44px;height:44px;min-width:66px;padding:0 10px;gap:6px;border:0;border-radius:8px;box-shadow:none;color:#555e59;}
+:root #edit-toolsbar .tool svg{width:17px;height:17px;flex-shrink:0;}
+:root #edit-toolsbar .tool>span{display:inline;font-size:12px;line-height:1.2;}
+:root #edit-toolsbar .tool kbd{display:none;}
+:root #edit-toolsbar .tool.active{background:rgba(33,87,50,.09);color:var(--green);box-shadow:inset 0 0 0 1px rgba(33,87,50,.08);font-weight:650;}
+:root #edit-toolsbar .edit-settings-toggle{min-width:60px;}
+:root #edit-toolsbar .edit-action-row{display:flex;align-items:center;gap:8px;border-left:1px solid var(--line);padding-left:8px;}
+:root #edit-toolsbar .edit-history-actions{display:flex;margin:0;gap:0;}
+:root #edit-toolsbar .dock-icon{width:44px!important;min-width:44px!important;height:44px!important;box-shadow:none;background:transparent;}
+:root #edit-toolsbar .edit-session-actions{margin:0;padding:0 0 0 8px;gap:6px;border-left:1px solid var(--line);}
+:root #edit-toolsbar .edit-session-actions button{min-height:44px;height:44px;padding:0 13px;font-size:12px;border-radius:8px;justify-content:center;}
+:root #edit-toolsbar .edit-cancel-button{border:0;background:transparent;}
+:root #edit-toolsbar .finish-edit{background:var(--green);color:white;border:0;box-shadow:none;}
+:root #edit-toolsbar .finish-edit:disabled{background:rgba(33,87,50,.07);color:#89928c;opacity:1;}
+:root #edit-toolsbar .edit-draft-state{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip-path:inset(50%);white-space:nowrap;}
+@media(max-width:1100px){:root #editor-view-controls .edit-placement-legend,:root #editor-view-controls .edit-port-options>label{display:none;}}
+@media(max-width:900px){
+  :root body.editing .edit-capacity-values>div{gap:8px;padding-inline:10px;}
+  :root body.editing .edit-capacity-values strong{font-size:18px;}
+  :root #edit-toolsbar .tool{min-width:56px;padding:0 7px;}
+  :root #edit-toolsbar .edit-toolbar-row,:root #edit-toolsbar .edit-action-row{gap:5px;}
+  :root #edit-toolsbar .edit-session-actions button{padding:0 10px;}
+}
+@media(max-width:759px) and (min-height:521px), (max-width:599px){
+  :root body.editing #edit-toolsbar{width:calc(100vw - 24px);padding:5px;}
+  :root #edit-toolsbar .edit-toolbar-row{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:5px;}
+  :root #edit-toolsbar .tool-grid{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:2px;}
+  :root #edit-toolsbar .tool{min-width:44px;flex-direction:column;gap:3px;padding:4px 2px;height:48px;}
+  :root #edit-toolsbar .tool>span{font-size:10px;}
+  :root #edit-toolsbar .edit-settings-toggle{width:44px;}
+  :root #edit-toolsbar .edit-action-row{grid-column:1/-1;justify-content:space-between;border:0;border-top:1px solid var(--line);padding:5px 0 0;}
+  :root #edit-toolsbar .edit-session-actions{padding:0;border:0;}
+  :root #edit-toolsbar .edit-session-actions button{min-width:82px;font-size:12px;}
+  :root #edit-panel .panel-header{padding:2px 12px;}
+  :root #edit-panel .panel-content{padding:10px 12px;}
+  :root #edit-panel .section-heading{margin-bottom:10px;}
+  :root #edit-panel .floor-plan-fields{padding:10px;margin-top:8px;}
+  :root body.editing .unified-topbar #edit-capacity-card{display:block;padding-top:7px;}
+  :root body.editing .edit-capacity-values>div{display:block;padding:0 10px;}
+  :root body.editing .edit-capacity-values strong{margin-top:3px;font-size:18px;}
+  :root body.editing .edit-capacity-foot{margin-top:2px;min-height:20px;}
+  :root body.editing .edit-capacity-explainer>summary{height:20px;min-height:20px;}
+  :root body.editing .edit-capacity-values span{font-size:9px;}
+  :root #editor-view-controls .editor-camera-controls button{padding:0 7px;font-size:11px;}
+  :root #editor-view-controls #edit-brush-options button{padding:0 7px;font-size:11px;}
+  :root #editor-view-controls .edit-port-options select{font-size:11px;padding:6px;}
+}
+@media(max-height:520px) and (min-width:600px){
+  :root body.editing .unified-topbar #edit-capacity-card{padding-top:4px;}
+  :root body.editing .edit-capacity-explainer>summary{width:24px;height:24px;min-height:24px;}
+  :root body.editing .edit-capacity-values strong{font-size:16px;}
+  :root #edit-panel .panel-header{padding:0 10px;}
+  :root #edit-toolsbar .tool{min-width:54px;font-size:10px;padding:0 5px;}
+  :root #edit-toolsbar .edit-session-actions button{font-size:11px;padding:0 8px;}
+}

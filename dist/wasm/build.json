@@ -1,0 +1,9 @@
+{
+  "crate": "warehouse-core",
+  "version": "0.8.0",
+  "abi": 1,
+  "rust": "1.100.0",
+  "sourceBaseline": "87828aede78b9ff17c5e87c47a364a238caef3f5",
+  "sha256": "30742dfc9b3e920a7f35f585cd5e6295ab4ac894a1df8e8f3ca15d1da6c7a662",
+  "bytes": 463429
+}

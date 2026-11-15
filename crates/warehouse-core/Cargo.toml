@@ -1,0 +1,11 @@
+[package]
+name = "warehouse-core"
+version = "0.8.0"
+edition = "2021"
+publish = false
+
+[lib]
+crate-type = ["cdylib", "rlib"]
+
+[dependencies]
+json = "=0.12.4"

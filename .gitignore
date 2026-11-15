@@ -1,0 +1,12 @@
+/target/
+/artifacts/
+/.sites-runtime/
+
+# Local credentials, hosting bindings and private attachments
+/node_modules/
+/.vercel/
+/.openai/
+/.codex-attachments/
+.env
+.env.*
+!.env.example

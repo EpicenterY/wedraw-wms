@@ -1,0 +1,8 @@
+wedraw WMS brand assets
+
+Logo and symbol: exact vector paths extracted from page 11 of the supplied Wedraw_Brand_Guidelines_1.pdf. Original shapes, proportions, spacing and fills preserved.
+Primary colours: Deep Green #215732; Pistachio #DDEBCB. Neutrals: Pure White #FFFFFF, Light Grey #D9D9D6, Mid Grey #A6A6A6, Dark Grey #53565A, Pure Black #000000.
+Interface font: Pretendard, designated by the supplied brand guideline.
+Font source: https://raw.githubusercontent.com/orioncactus/pretendard/main/packages/pretendard/dist/web/variable/woff2/PretendardVariable.woff2
+Font licence: SIL Open Font License 1.1, bundled unchanged as Pretendard-LICENSE.txt.
+Licence source: https://raw.githubusercontent.com/orioncactus/pretendard/main/LICENSE

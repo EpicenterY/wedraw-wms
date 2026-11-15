@@ -1,0 +1,1 @@
+{"name":"evio-grid-lab","private":true,"type":"module","scripts":{"build":"node scripts/build-wasm.mjs","test":"node --import ./scripts/test-runtime.mjs --test tests/*.test.mjs","test:migration":"node --import ./scripts/test-runtime.mjs --test tests/rust-core.test.mjs tests/rust-warehouse.test.mjs","dev":"node scripts/serve.mjs"}}

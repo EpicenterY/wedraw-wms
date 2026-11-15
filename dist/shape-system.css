@@ -1,0 +1,122 @@
+/* Shared shape scale. Loaded last so desktop, touch and legacy panels agree. */
+:root {
+  --radius-control:8px;
+  --radius-compact:6px;
+  --radius-inset:10px;
+  --radius-card:14px;
+  --radius-toolbar:16px;
+  --radius-panel:18px;
+  --control-height:40px;
+  --close-size:36px;
+}
+
+/* Actions and fields share one silhouette, including disabled/selected states. */
+:root :is(.primary-button,.secondary-button,.quiet-button,.edit-cancel-button,
+  .finish-edit,.delete-confirm-button,.edit-delete-button,.order-select-button,
+  .row-pick,.preset,.edit-expand-handle,.icon-button),
+:root :is(.pagination,.port-card-actions) button,
+:root .release-info-dialog .release-info-done {
+  border-radius:var(--radius-control);
+}
+:root :is(.primary-button,.secondary-button,.quiet-button,.edit-cancel-button,
+  .finish-edit,.delete-confirm-button,.edit-delete-button),
+:root :is(.pagination,.port-card-actions) button,
+:root .release-info-dialog .release-info-done {
+  min-height:var(--control-height); height:var(--control-height);
+  line-height:1.35;
+}
+:root :is(.two-fields,.catalog-actions,.order-generator,.floor-plan-fields,.height-label) input,
+:root :is(.floating-panel,.sidebar,.order-playback,.edit-port-options) select,
+#edit-selected-port-type {
+  border-radius:var(--radius-control);
+  min-height:var(--control-height); height:var(--control-height);
+  line-height:normal;
+}
+:root .search-field { border-radius:var(--radius-control); height:var(--control-height); min-height:var(--control-height); }
+:root .search-field input { border-radius:0; height:100%; min-height:0!important; padding:8px 0; line-height:normal; }
+:root .catalog-quick button, :root .toast-action { border-radius:var(--radius-compact); min-height:32px; }
+:root .order-row-actions { gap:8px; }
+:root .customer-order-table .order-row-actions :is(.quiet-button,.order-select-button) {
+  border-radius:var(--radius-control); min-height:var(--control-height);
+}
+:root .inventory-filters, :root .catalog-actions { gap:8px; }
+
+/* Concentric toolbar corners: 16px shell and 10px inset controls. */
+:root :is(.brand,.main-hud,.main-tabs,.simulation-dock,.edit-toolsbar) { border-radius:var(--radius-toolbar); }
+:root :is(.brand,.main-hud,.main-tabs) { min-height:60px; }
+:root :is(.main-tabs,.simulation-dock,.edit-toolsbar) { padding:7px; }
+:root .tab, :root .simulation-dock :is(.primary-button,select,.dock-icon),
+:root .edit-toolsbar :is(.tool,.dock-icon,.finish-edit,.edit-cancel-button) {
+  border-radius:var(--radius-inset); min-height:44px; height:44px;
+}
+:root .dock-icon, :root .edit-toolsbar .dock-icon { width:44px; }
+:root .main-tabs { gap:4px; }
+:root .tab { padding-top:0; padding-bottom:0; }
+:root .main-tabs .more-button { min-width:44px; }
+
+/* Segments and steppers use the same inset rule at a smaller scale. */
+:root :is(.edit-segmented,.view-buttons,.stepper) { border-radius:var(--radius-inset); padding:3px; gap:4px; }
+:root :is(.edit-segmented,.view-buttons,.stepper)>button {
+  border-radius:var(--radius-control); min-height:36px;
+}
+:root .stepper button { width:36px; height:36px; flex-shrink:0; }
+:root .stepper input { border-radius:var(--radius-control); min-height:36px; }
+:root .tool kbd { border-radius:4px; }
+
+/* Surface hierarchy: panel > floating card > inset group > control. */
+:root .floating-panel, :root .floating-panel.wide-panel, body.editing .edit-panel,
+:root dialog, :root dialog.release-info-dialog { border-radius:var(--radius-panel); }
+:root :is(.focus-card,.selected-order-card,.inventory-trace-card,.operation-trace-card,
+  .edit-capacity-card,.edit-port-inspector,.edit-impact-card,.celebration-message),
+:root .view-status.system-status { border-radius:var(--radius-card); }
+:root :is(.advanced-disclosure,.floor-plan-fields,.height-result,.cooperate-control,
+  .robot-spec,.dummy-card,.metric,.table-scroll,.customer-lines,.order-overview,
+  .operations-live-state,.operations-overview>div,.operation-resource,.port-buffer-card,
+  .inventory-selection-bar,.inventory-trace-location,.operation-trace-status,.trace-digging,
+  .edit-apply-summary,.edit-apply-warning,.sku-delete-summary,.sku-delete-orders,.dialog-note,
+  .toast,.warnings,.model-invalid), #edit-capacity-detail { border-radius:var(--radius-inset); }
+:root :is(.port-slot,.trace-digging-robot) { border-radius:var(--radius-control); }
+:root .trace-digging-robot>b { border-radius:var(--radius-compact); }
+:root .order-overview>div { border-radius:0; }
+:root .advanced-disclosure>summary { border-radius:calc(var(--radius-inset) - 1px); }
+:root .advanced-disclosure[open]>summary { border-bottom-left-radius:0; border-bottom-right-radius:0; }
+:root :is(.status-chip,.tag,.order-kind,.order-priority-label,.priority-badge,.trace-mode-chip) { border-radius:6px; }
+:root :is(.order-progress,.selected-order-track,.port-progress,.operation-list-progress),
+:root :is(.order-progress,.selected-order-track,.port-progress,.operation-list-progress)>span { border-radius:999px; }
+
+/* Close affordances stay circular and have identical targets on every surface. */
+:root :is(.panel-close,.dialog-close,.release-info-close),
+:root :is(.focus-card,.selected-order-heading,.inventory-trace-heading,.operation-trace-heading,
+  .edit-port-inspector,.celebration-message,.order-action-summary) .icon-button {
+  display:grid; place-items:center; flex-shrink:0; padding:0; margin-top:0;
+  width:var(--close-size)!important; min-width:var(--close-size)!important;
+  height:var(--close-size)!important; min-height:var(--close-size)!important;
+  border-radius:50%!important; line-height:1;
+  background:#ececee; color:#6e6e73;
+}
+:root .icon-button svg { flex-shrink:0; }
+:root dialog :is(h2,.release-info-eyebrow) { margin-right:44px; }
+:root .release-info-pill { border-radius:999px; }
+
+@media (max-width:1024px), (pointer:coarse) {
+  :root { --control-height:44px; --close-size:44px; }
+  :root :is(.edit-segmented,.view-buttons,.stepper)>button,
+  :root .catalog-quick button, :root .toast-action { min-height:44px; }
+  :root .stepper button { width:44px; height:44px; }
+  :root .stepper input { min-height:44px; }
+}
+@media (max-width:1024px) {
+  :root { --radius-panel:16px; --radius-toolbar:14px; }
+  /* Compact toolbar corners retain the same shared shape scale. */
+  :root :is(.brand,.main-tabs) { min-height:56px; }
+  :root :is(.main-tabs,.simulation-dock,.edit-toolsbar) { padding:5px; }
+  :root .main-tabs { gap:1px; }
+  :root .main-hud { min-height:44px; border-radius:var(--radius-inset); }
+  :root .edit-toolsbar { padding:7px; border-radius:var(--radius-toolbar); }
+}
+@media (max-width:600px) {
+  /* Phone lists remain continuous rows, without clipped outer corners. */
+  :root #inventory-panel .table-scroll, :root .orders-table-scroll { border-radius:0; }
+  :root .inventory-filters .search-field { min-width:100%; }
+  :root .edit-toolsbar .tool { height:auto; }
+}
