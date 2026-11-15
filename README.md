@@ -2,7 +2,7 @@
 
 [실행 중인 데모](https://wedraw-wms.vercel.app/) · [GitHub 소스](https://github.com/EpicenterY/wedraw-wms)
 
-웹 화면과 Rust/WebAssembly 계산 코어로 구성한 물류창고 시뮬레이터입니다. 이 저장소는 배포된 **v1.12.0** 소스의 공유용 스냅샷이며, 원본 기준 커밋은 `102956e3f578e993c5680472ade66a41ad8a4ca7`입니다. 실제 장비와 연결하지 않습니다.
+웹 화면과 Rust/WebAssembly 계산 코어로 구성한 물류창고 시뮬레이터입니다. 이 저장소는 배포된 **v1.12.1** 소스의 공유용 스냅샷이며, 원본 기준 커밋은 `569b6dc900fa9fb60665a64fb6740553ef70485e`입니다. 실제 장비와 연결하지 않습니다.
 
 ## 빠른 실행
 

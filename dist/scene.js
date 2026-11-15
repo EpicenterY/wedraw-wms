@@ -64,6 +64,14 @@ function cube(a,x,y,z,w,h,d,color) {
   quad(a,[[x0,y1,z1],[x1,y1,z1],[x1,y1,z0],[x0,y1,z0]],[0,1,0],c);
   quad(a,[[x0,y0,z0],[x1,y0,z0],[x1,y0,z1],[x0,y0,z1]],[0,-1,0],c);
 }
+function hoistBelts(a,pose) {
+  // Flat black timing belts: 32 mm wide, 9 mm thick, attached at all four corners.
+  // Use solid faces in both views so lighting reveals the width and thickness.
+  for(const belt of pose.belts){
+    const length=Math.max(.003,belt.top[1]-belt.bottom[1]);
+    cube(a,belt.top[0],(belt.top[1]+belt.bottom[1])/2,belt.top[2],.032,length,.009,'#16191b');
+  }
+}
 function cylinder(a,x,y,z,radius,length,axis,sideColor,capColor=sideColor,segments=8) {
   const normal=(theta)=>axis==='x'?[0,Math.cos(theta),Math.sin(theta)]:axis==='z'?[Math.cos(theta),Math.sin(theta),0]:[Math.cos(theta),0,Math.sin(theta)];
   const axisVector=axis==='x'?[1,0,0]:axis==='z'?[0,0,1]:[0,1,0];
@@ -1055,7 +1063,6 @@ export function createScene(canvas,{onCell=()=>{},onHover=()=>{},onInspect=()=>{
         const centerZ=p.z+p.bodySign*SZ/2;
         for(const dz of[-1,1])cube(robotSolids,p.x,H+.061,centerZ+dz*(SZ+.025),SX+.05,.010,.018,'#58c8a9');
         for(const dx of[-1,1])cube(robotSolids,p.x+dx*(SX/2+.025),H+.061,centerZ,.018,.010,2*SZ+.05,'#58c8a9');
-        for(const belt of p.belts){const length=Math.max(.003,belt.top[1]-belt.bottom[1]);cube(lifting,belt.top[0],(belt.top[1]+belt.bottom[1])/2,belt.top[2],.018,length,.005,'#a2afb6');}
         appendTranslated(lifting,gripperGeometry[p.loaded?1:0],p.x,p.gripperY,p.z);
         // Traced carrier stays highlighted without a task label.
       }
@@ -1065,7 +1072,7 @@ export function createScene(canvas,{onCell=()=>{},onHover=()=>{},onInspect=()=>{
       for(const dx of[-.31,.31])line(outline,[p.x+dx,H+.12,p.z+p.bodySign*.222],[p.x+dx,H+.61,p.z+p.bodySign*.222],color);
       for(const xx of[-.329,.329])for(const zz of[-p.bodySign*.15,p.bodySign*.60])wireCircle(outline,p.x+xx,H+.116+(r.wheels?.liftZ||0),p.z+zz,.072,'x',color,8);
       for(const xx of[-.245,.245])for(const zz of[-p.bodySign*.221,p.bodySign*.701])wireCircle(outline,p.x+xx,H+.113+(r.wheels?.liftX||0),p.z+zz,.069,'z',color,8);
-      for(const belt of p.belts)line(isDigging?leaders:outline,belt.top,belt.bottom,isDigging?'#829e8d':'#c7d2cb');
+      hoistBelts(isDigging||isSelected?lifting:context,p);
       wireBox(isDigging?leaders:outline,p.x,p.gripperY+.019,p.z,.614,.038,.399,color);
       if(p.loaded){
         renderedBins.add(p.binId);
@@ -1174,12 +1181,7 @@ export function createScene(canvas,{onCell=()=>{},onHover=()=>{},onInspect=()=>{
       if(!robotGeometryCache.has(key))robotGeometryCache.set(key,buildRobotGeometry(r,{wheels:false}));
       appendTranslated(a,robotGeometryCache.get(key),p.x,H,p.z);
       appendTranslated(a,wheelGeometry(r),p.x,H,p.z);
-      // Four flat steel belts stay vertically aligned with the suspended frame.
-      for(const belt of p.belts){
-        const length=Math.max(.003,belt.top[1]-belt.bottom[1]);
-        cube(a,belt.top[0],(belt.top[1]+belt.bottom[1])/2,belt.top[2],.018,length,.005,'#a2afb6');
-        line(l,belt.top,belt.bottom,'#7e929e');
-      }
+      hoistBelts(a,p);
       appendTranslated(a,gripperGeometry[p.loaded?1:0],p.x,p.gripperY,p.z);
       if(p.loaded)binGeometry(a,p.x,p.binY,p.z,r.bin||{id:p.binId},opts.followRobotId===r.id||opts.cutaway?'high':'medium');
       const phases={'idle':'대기','lower-empty':'그리퍼 하강','grip':'체결','raise-loaded':'빈 인양','move':p.loaded?'빈 운반':'이동','lower-loaded':'빈 하강','release':'분리','raise-empty':'그리퍼 복귀','pick':'피킹'};

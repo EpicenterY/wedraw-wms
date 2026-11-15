@@ -1,5 +1,9 @@
 /** New releases go first. Version, date and notes are rendered from this list. */
 export const RELEASES=Object.freeze([
+  Object.freeze({version:'1.12.1',date:'2026-11-15',changes:Object.freeze([
+    '로봇 리프터의 네 줄을 폭과 두께가 있는 검정 타이밍 벨트로 표현',
+    '일반·와이어프레임 뷰의 벨트 형상 통일 · 빈과 리프터의 가림 관계 유지',
+  ])}),
   Object.freeze({version:'1.12.0',date:'2026-11-15',changes:Object.freeze([
     '품목 순서 제약 없는 선행 공급 · 리프팅 후 포트 입구 예약',
     '포트 가까운 안전한 위치에서 대기 · 준비된 운반 로봇의 인계 순서 유지',
